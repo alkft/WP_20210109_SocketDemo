@@ -67,7 +67,7 @@ namespace Server
             {
                 Socket clientSocket = serverSocket.Accept();  //client 進入!        
                 clientPool.Add(clientSocket);                
-                clientSocket.Send(Encoding.ASCII.GetBytes("Server Say Hello"));
+                clientSocket.Send(Encoding.ASCII.GetBytes("可以開始輸入信息"));
                 ShowMsg($"[系統]偵測到客戶端{ clientSocket.RemoteEndPoint.ToString()}連入系統...");
                 Thread receiveThread = new Thread(ReceiveMessage);   //綁定接收處理
                 receiveThread.Start(clientSocket);

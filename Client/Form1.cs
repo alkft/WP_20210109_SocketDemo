@@ -15,18 +15,29 @@ namespace Client
 {
     public partial class Form1 : Form
     {
+        public static Form1 Instance { get; set; }
         private static byte[] result = new byte[1024];
         private static int _port = 8885;
         private Socket clientSocket;
         private Thread receiveMessageThread;
+
+        public string serverIP;
+        public string serverPort;
+        public bool connect;
+        
         public Form1()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            connect = false;
         }
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -38,18 +49,24 @@ namespace Client
             receiveMessageThread?.Abort();
         }
 
-    
-
-        private void btnConnect_Click(object sender, EventArgs e)
+        public void isConnect()
         {
-            IPAddress ip = IPAddress.Parse(tbIP.Text);
-            _port = int.Parse(tbPort.Text);
+            try
+            {
+                IPAddress ip = IPAddress.Parse(serverIP);
+                _port = int.Parse(serverPort);
 
-            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            clientSocket.Connect(new IPEndPoint(ip, 8885)); //配置伺服器IP與埠
-            ShowMsg($"[系統]連線伺服器成功...");
-            receiveMessageThread = new Thread(ReceiveMessage);
-            receiveMessageThread.Start();
+                clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                clientSocket.Connect(new IPEndPoint(ip, 8885)); //配置伺服器IP與埠
+                ShowMsg($"[系統]連線伺服器成功...");
+                receiveMessageThread = new Thread(ReceiveMessage);
+                receiveMessageThread.Start();
+            }
+            catch (Exception)
+            {
+                connect = false;
+                MessageBox.Show("暫時無法連接到伺服器，請重試", "警告");
+            }
         }
         private void ReceiveMessage()
         {
@@ -87,7 +104,27 @@ namespace Client
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-            clientSocket.Send(Encoding.ASCII.GetBytes(tbMsg.Text));
+            if (connect)
+            {
+                clientSocket.Send(Encoding.ASCII.GetBytes(tbMsg.Text));
+            }
+            else
+            {
+                MessageBox.Show("你還沒有連接伺服器，無法發送信息!!!!","警告");
+            }
+        }
+
+        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!connect)
+            {
+                connectForm connect = new connectForm();
+                connect.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("你已經連接伺服器！", "警告");
+            }
         }
     }
 }
