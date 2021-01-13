@@ -30,6 +30,8 @@ namespace Client
         private void InitializeComponent()
         {
             this.gbInfo = new System.Windows.Forms.GroupBox();
+            this.tb_userName = new System.Windows.Forms.TextBox();
+            this.name = new System.Windows.Forms.Label();
             this.tbIP = new System.Windows.Forms.TextBox();
             this.labIP = new System.Windows.Forms.Label();
             this.tbPort = new System.Windows.Forms.TextBox();
@@ -40,6 +42,8 @@ namespace Client
             // 
             // gbInfo
             // 
+            this.gbInfo.Controls.Add(this.tb_userName);
+            this.gbInfo.Controls.Add(this.name);
             this.gbInfo.Controls.Add(this.tbIP);
             this.gbInfo.Controls.Add(this.labIP);
             this.gbInfo.Controls.Add(this.tbPort);
@@ -49,10 +53,28 @@ namespace Client
             this.gbInfo.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.gbInfo.Name = "gbInfo";
             this.gbInfo.Padding = new System.Windows.Forms.Padding(6, 7, 6, 7);
-            this.gbInfo.Size = new System.Drawing.Size(375, 79);
+            this.gbInfo.Size = new System.Drawing.Size(375, 128);
             this.gbInfo.TabIndex = 10;
             this.gbInfo.TabStop = false;
             this.gbInfo.Text = "連線資訊";
+            // 
+            // tb_userName
+            // 
+            this.tb_userName.Location = new System.Drawing.Point(142, 81);
+            this.tb_userName.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
+            this.tb_userName.Name = "tb_userName";
+            this.tb_userName.Size = new System.Drawing.Size(169, 35);
+            this.tb_userName.TabIndex = 10;
+            // 
+            // name
+            // 
+            this.name.AutoSize = true;
+            this.name.Location = new System.Drawing.Point(44, 82);
+            this.name.Margin = new System.Windows.Forms.Padding(12, 0, 12, 0);
+            this.name.Name = "name";
+            this.name.Size = new System.Drawing.Size(101, 27);
+            this.name.TabIndex = 9;
+            this.name.Text = "用戶名稱:";
             // 
             // tbIP
             // 
@@ -94,7 +116,7 @@ namespace Client
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(102, 109);
+            this.btnConnect.Location = new System.Drawing.Point(102, 152);
             this.btnConnect.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(204, 45);
@@ -107,7 +129,7 @@ namespace Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(406, 170);
+            this.ClientSize = new System.Drawing.Size(406, 213);
             this.Controls.Add(this.gbInfo);
             this.Controls.Add(this.btnConnect);
             this.Name = "connectForm";
@@ -126,5 +148,7 @@ namespace Client
         private System.Windows.Forms.TextBox tbPort;
         private System.Windows.Forms.Label labPort;
         private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.TextBox tb_userName;
+        private System.Windows.Forms.Label name;
     }
 }

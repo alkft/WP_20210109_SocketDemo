@@ -33,15 +33,19 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userList = new System.Windows.Forms.ListBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lb_userName = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // rtbMsg
             // 
-            this.rtbMsg.Location = new System.Drawing.Point(15, 32);
+            this.rtbMsg.Location = new System.Drawing.Point(15, 52);
             this.rtbMsg.Margin = new System.Windows.Forms.Padding(6, 7, 6, 7);
             this.rtbMsg.Name = "rtbMsg";
-            this.rtbMsg.Size = new System.Drawing.Size(705, 381);
+            this.rtbMsg.Size = new System.Drawing.Size(551, 361);
             this.rtbMsg.TabIndex = 10;
             this.rtbMsg.Text = "";
             // 
@@ -82,11 +86,55 @@
             this.connectToolStripMenuItem.Text = "連接伺服器";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
+            // userList
+            // 
+            this.userList.Font = new System.Drawing.Font("微軟正黑體", 10F);
+            this.userList.FormattingEnabled = true;
+            this.userList.ItemHeight = 17;
+            this.userList.Location = new System.Drawing.Point(576, 83);
+            this.userList.Name = "userList";
+            this.userList.Size = new System.Drawing.Size(144, 327);
+            this.userList.TabIndex = 12;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            this.label1.Location = new System.Drawing.Point(489, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 20);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "用戶名稱:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            this.label2.Location = new System.Drawing.Point(575, 52);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(73, 20);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "在線用戶";
+            // 
+            // lb_userName
+            // 
+            this.lb_userName.AutoSize = true;
+            this.lb_userName.Font = new System.Drawing.Font("微軟正黑體", 12F);
+            this.lb_userName.Location = new System.Drawing.Point(572, 25);
+            this.lb_userName.Name = "lb_userName";
+            this.lb_userName.Size = new System.Drawing.Size(97, 20);
+            this.lb_userName.TabIndex = 15;
+            this.lb_userName.Text = "USERNAME";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 27F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(735, 473);
+            this.Controls.Add(this.lb_userName);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.userList);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.tbMsg);
             this.Controls.Add(this.rtbMsg);
@@ -112,6 +160,10 @@
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ListBox userList;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lb_userName;
     }
 }
 

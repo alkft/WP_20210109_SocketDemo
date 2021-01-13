@@ -19,6 +19,7 @@ namespace Server
         private static byte[] result = new byte[1024];
         private static int _port = 8885;
         static Socket serverSocket;
+        int serverUserNum = 10;
 
         private IList<Socket> clientPool;
 
@@ -51,7 +52,7 @@ namespace Server
 
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(new IPEndPoint(ip, _port));
-            serverSocket.Listen(10);    //設定最多10個排隊連線請求
+            serverSocket.Listen(serverUserNum);    //設定最多10個排隊連線請求
             ShowMsg($"[系統]正在監聽{serverSocket.LocalEndPoint.ToString()}...");
             //通過Clientsoket傳送資料
             Thread myThread = new Thread(ListenClientConnect);
@@ -65,15 +66,14 @@ namespace Server
             //利用無窮回圈 接待 client
             while (true)
             {
-                Socket clientSocket = serverSocket.Accept();  //client 進入!        
-                clientPool.Add(clientSocket);                
-                clientSocket.Send(Encoding.ASCII.GetBytes("可以開始輸入信息"));
-                ShowMsg($"[系統]偵測到客戶端{ clientSocket.RemoteEndPoint.ToString()}連入系統...");
+                Socket clientSocket = serverSocket.Accept();  //client 進入! 
+                clientPool.Add(clientSocket);
+                clientSocket.Send(Encoding.Unicode.GetBytes("可以開始輸入信息"));
+                ShowMsg($"[系統]偵測到客戶端 {clientSocket.RemoteEndPoint.ToString()}連入系統...");
                 Thread receiveThread = new Thread(ReceiveMessage);   //綁定接收處理
                 receiveThread.Start(clientSocket);
             }
         }
-
 
         private void ReceiveMessage(object clientSocket)
         {
@@ -85,11 +85,11 @@ namespace Server
                 {
                     //通過clientSocket接收資料
                     int receiveNumber = myClientSocket.Receive(result);  //受到的資料長度
-                    string msg = Encoding.ASCII.GetString(result, 0, receiveNumber);
-                    ShowMsg($"接收客戶端{myClientSocket.RemoteEndPoint.ToString()}訊息{msg}");
+                    string msg = Encoding.Unicode.GetString(result, 0, receiveNumber);
+                    ShowMsg($"接收客戶端{myClientSocket.RemoteEndPoint.ToString()}users發送訊息{msg}");
                     foreach (var socket in clientPool)
                     {
-                        socket.Send(Encoding.ASCII.GetBytes(msg));
+                        socket.Send(Encoding.Unicode.GetBytes(msg));
                     }
 
                 }

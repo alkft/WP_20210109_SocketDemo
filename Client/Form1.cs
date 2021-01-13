@@ -23,8 +23,10 @@ namespace Client
 
         public string serverIP;
         public string serverPort;
+        public string userName;
         public bool connect;
-        
+
+
         public Form1()
         {
             if (Instance == null)
@@ -38,6 +40,7 @@ namespace Client
         private void Form1_Load(object sender, EventArgs e)
         {
             connect = false;
+            lb_userName.Text = null;
         }
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -47,6 +50,10 @@ namespace Client
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             receiveMessageThread?.Abort();
+        }
+        public void showUserName()
+        {
+            lb_userName.Text = userName;
         }
 
         public void isConnect()
@@ -68,17 +75,29 @@ namespace Client
                 MessageBox.Show("暫時無法連接到伺服器，請重試", "警告");
             }
         }
+
         private void ReceiveMessage()
         {
             while (true)
             {
                 int receiveLength = clientSocket.Receive(result);
-                string msg = Encoding.ASCII.GetString(result, 0, receiveLength);
+                string msg = Encoding.Unicode.GetString(result, 0, receiveLength);
                 Console.WriteLine("接收伺服器訊息：{0}", msg);
-                ShowMsg($"[系統]{msg}");
+                if (!msg.Contains("&"))
+                {
+                    ShowMsg(msg.Substring(0, msg.Length));
+                }
+                else
+                {
+                    string[] Array = msg.Split('&');
+                    if (!userList.Items.Contains(Array[0]))
+                    {
+                        userList.Items.Add(Array[0]);
+                    }
+                    ShowMsg($"[{Array[0]}]" + Array[1]);
+                }
             }
         }
-
         private void ShowMsg(string msg, bool newLine = true)
         {
             Console.WriteLine(msg);
@@ -86,6 +105,8 @@ namespace Client
         }
 
         private delegate void AppendTextByThreadSafeDelegate(Control control, string text);
+
+
 
         public static void AppendTextByThreadSafe(Control control, string text)
         {
@@ -102,15 +123,16 @@ namespace Client
             }
         }
 
+
         private void btnSend_Click(object sender, EventArgs e)
         {
             if (connect)
             {
-                clientSocket.Send(Encoding.ASCII.GetBytes(tbMsg.Text));
+                clientSocket.Send(Encoding.Unicode.GetBytes(userName + "&" + tbMsg.Text));
             }
             else
             {
-                MessageBox.Show("你還沒有連接伺服器，無法發送信息!!!!","警告");
+                MessageBox.Show("你還沒有連接伺服器，無法發送信息!!!!", "警告");
             }
         }
 
